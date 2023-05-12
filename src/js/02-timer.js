@@ -1,5 +1,8 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import Notiflix from 'notiflix';
+
+Notiflix.Notify.init({ timeout: 4000 });
 
 const options = {
   enableTime: true,
@@ -18,9 +21,31 @@ const options = {
 const fp = flatpickr('#datetime-picker', options);
 const inputEl = document.querySelector('#datetime-picker');
 const fpInputEl = document.querySelector('[type="datetime-local"]');
-console.log(fpInputEl);
-
 const startBtn = document.querySelector('[data-start]');
+const timerEl = document.querySelector('.timer');
+const fieldElements = document.querySelectorAll('.field');
+const valueElements = document.querySelectorAll('.value');
+const labelElements = document.querySelectorAll('.label');
+let timerId = null;
+
+timerEl.style.display = 'flex';
+timerEl.style.gap = '20px';
+
+fieldElements.forEach(el => {
+  el.style.display = 'flex';
+  el.style.flexDirection = 'column';
+  el.style.alignItems = 'center';
+});
+
+valueElements.forEach(el => {
+  el.style.fontSize = '30px';
+});
+
+labelElements.forEach(el => {
+  el.style.fontSize = '11px';
+  el.style.textTransform = 'uppercase';
+  el.style.fontWeight = '700';
+});
 
 startBtn.setAttribute('disabled', 'disabled');
 startBtn.addEventListener('click', onStart);
@@ -28,20 +53,20 @@ inputEl.addEventListener('input', inputHandler);
 
 function inputHandler() {
   if (fp.selectedDates[0] < fp._initialDate) {
-    window.alert('Please choose a date in the future');
+    Notiflix.Notify.failure('Please choose a date in the future');
     startBtn.setAttribute('disabled', 'disabled');
   } else {
     startBtn.removeAttribute('disabled');
   }
 }
 
-let timerId = null;
-
 function onStart() {
   startBtn.setAttribute('disabled', 'disabled');
   fpInputEl.setAttribute('readonly', 'readonly');
+  Notiflix.Notify.success('The timer has successfully started');
 
   let remainingTime = fp.selectedDates[0].getTime() - new Date().getTime();
+
   if (remainingTime <= 0) {
     clearInterval(timerId);
     return;
@@ -49,7 +74,6 @@ function onStart() {
 
   timerId = setInterval(() => {
     const { days, hours, minutes, seconds } = convertMs(remainingTime);
-
     const daysRemaining = document.querySelector('[data-days]');
     const hoursRemaining = document.querySelector('[data-hours]');
     const minutesRemaining = document.querySelector('[data-minutes]');
