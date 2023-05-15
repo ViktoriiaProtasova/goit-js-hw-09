@@ -28,6 +28,7 @@ const valueElements = document.querySelectorAll('.value');
 const labelElements = document.querySelectorAll('.label');
 let timerId = null;
 
+// console.log(fpInputEl.value);
 timerEl.style.display = 'flex';
 timerEl.style.gap = '20px';
 
@@ -62,7 +63,7 @@ function inputHandler() {
 
 function onStart() {
   startBtn.setAttribute('disabled', 'disabled');
-  fpInputEl.setAttribute('readonly', 'readonly');
+  fpInputEl.setAttribute('disabled', 'disabled');
   Notiflix.Notify.success('The timer has successfully started');
 
   let remainingTime = fp.selectedDates[0].getTime() - new Date().getTime();
