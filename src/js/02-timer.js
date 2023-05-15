@@ -28,7 +28,6 @@ const valueElements = document.querySelectorAll('.value');
 const labelElements = document.querySelectorAll('.label');
 let timerId = null;
 
-// console.log(fpInputEl.value);
 timerEl.style.display = 'flex';
 timerEl.style.gap = '20px';
 
@@ -70,6 +69,7 @@ function onStart() {
 
   if (remainingTime <= 0) {
     clearInterval(timerId);
+    fpInputEl.removeAttribute('disabled');
     return;
   }
 
