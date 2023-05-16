@@ -7,6 +7,7 @@ Notiflix.Notify.init({ timeout: 4000 });
 const options = {
   enableTime: true,
   time_24hr: true,
+  disableMobile: 'true',
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
@@ -19,7 +20,7 @@ const options = {
 };
 
 const fp = flatpickr('#datetime-picker', options);
-const inputEl = fp.mobileInput;
+const inputEl = fp.input;
 const startBtn = document.querySelector('[data-start]');
 const timerEl = document.querySelector('.timer');
 const fieldElements = document.querySelectorAll('.field');
