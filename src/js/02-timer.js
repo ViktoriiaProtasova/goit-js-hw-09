@@ -19,8 +19,7 @@ const options = {
 };
 
 const fp = flatpickr('#datetime-picker', options);
-const inputEl = document.querySelector('#datetime-picker');
-const fpInputEl = document.querySelector('[type="datetime-local"]');
+const inputEl = fp.mobileInput;
 const startBtn = document.querySelector('[data-start]');
 const timerEl = document.querySelector('.timer');
 const fieldElements = document.querySelectorAll('.field');
@@ -62,14 +61,14 @@ function inputHandler() {
 
 function onStart() {
   startBtn.setAttribute('disabled', 'disabled');
-  fpInputEl.setAttribute('disabled', 'disabled');
+  inputEl.setAttribute('disabled', 'disabled');
   Notiflix.Notify.success('The timer has successfully started');
 
   let remainingTime = fp.selectedDates[0].getTime() - new Date().getTime();
 
   if (remainingTime <= 0) {
     clearInterval(timerId);
-    fpInputEl.removeAttribute('disabled');
+    inputEl.removeAttribute('disabled');
     return;
   }
 
