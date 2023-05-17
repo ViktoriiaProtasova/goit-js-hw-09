@@ -67,12 +67,6 @@ function onStart() {
 
   let remainingTime = fp.selectedDates[0].getTime() - new Date().getTime();
 
-  if (remainingTime <= 0) {
-    clearInterval(timerId);
-    inputEl.removeAttribute('disabled');
-    return;
-  }
-
   timerId = setInterval(() => {
     const { days, hours, minutes, seconds } = convertMs(remainingTime);
     const daysRemaining = document.querySelector('[data-days]');
@@ -86,6 +80,11 @@ function onStart() {
     secondsLeft.innerText = `${addLeadingZero(seconds)}`;
 
     remainingTime -= 1000;
+
+    if (remainingTime <= 0) {
+      clearInterval(timerId);
+      inputEl.removeAttribute('disabled');
+    }
   }, 1000);
 }
 
